@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect, useTransition, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Bike,
@@ -52,6 +52,7 @@ export default function RecommendationForm() {
 
   // Wizard step (1 to 5)
   const [step, setStep] = useState<number>(1);
+  const formRef = useRef<HTMLDivElement>(null);
 
   // Form states initialized with URL params if available (FR-107)
   const [segment, setSegment] = useState<VehicleSegment>(
@@ -118,20 +119,32 @@ export default function RecommendationForm() {
     return true;
   };
 
+  const scrollToForm = () => {
+    if (formRef.current) {
+      const rect = formRef.current.getBoundingClientRect();
+      // If form top is scrolled out of view or too far down, align it smoothly
+      if (rect.top < 60 || rect.top > 180) {
+        const yOffset = -75; // clearance for top sticky navbar
+        const targetY = rect.top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+      }
+    }
+  };
+
   const handleNextStep = () => {
     if (step === 2 && !validateBudget()) {
       return;
     }
     if (step < 5) {
       setStep(step + 1);
-      window.scrollTo({ top: 300, behavior: 'smooth' });
+      setTimeout(scrollToForm, 50);
     }
   };
 
   const handlePrevStep = () => {
     if (step > 1) {
       setStep(step - 1);
-      window.scrollTo({ top: 300, behavior: 'smooth' });
+      setTimeout(scrollToForm, 50);
     }
   };
 
@@ -213,7 +226,7 @@ export default function RecommendationForm() {
   const mileageUnit = isEv ? 'km per charge' : 'km/l';
 
   return (
-    <div id="finder" className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+    <div id="finder" ref={formRef} className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden relative">
       {/* Form Progress Bar */}
       <div className="bg-slate-50 border-b border-slate-200 p-4 sm:p-6">
         <div className="flex items-center justify-between mb-3">
@@ -569,26 +582,29 @@ export default function RecommendationForm() {
             </div>
           </div>
         )}
+      </div>
 
+      {/* Sticky Bottom Action Bar (always visible in thumb zone & predictable location) */}
+      <div className="sticky bottom-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-200 px-6 py-4 sm:px-10 rounded-b-3xl shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
         {/* Live hint footer strip (FR-108) */}
-        <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+        <div className="flex items-center justify-between text-xs text-slate-500 mb-3">
           <div className="flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
-            <span>{hintLoading ? 'Calculating...' : countHint}</span>
+            <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse flex-shrink-0" />
+            <span className="font-medium text-slate-700">{hintLoading ? 'Calculating...' : countHint}</span>
           </div>
 
-          <div className="text-slate-400 hidden sm:block">
+          <div className="text-slate-400 hidden sm:block text-[11px]">
             {segment} &bull; INR {budgetMin.toLocaleString('en-IN')} - {budgetMax.toLocaleString('en-IN')}
           </div>
         </div>
 
         {/* Action Controls */}
-        <div className="mt-6 flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between">
           {step > 1 ? (
             <button
               type="button"
               onClick={handlePrevStep}
-              className="inline-flex items-center px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold text-sm transition"
+              className="inline-flex items-center px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold text-sm transition active:scale-95"
             >
               <ChevronLeft className="w-4 h-4 mr-1" /> Back
             </button>
@@ -600,7 +616,7 @@ export default function RecommendationForm() {
             <button
               type="button"
               onClick={handleNextStep}
-              className="inline-flex items-center px-7 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-sm transition shadow-lg shadow-orange-500/20"
+              className="inline-flex items-center px-7 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-sm transition shadow-lg shadow-orange-500/20 active:scale-95"
             >
               Next Step <ChevronRight className="w-4 h-4 ml-1.5" />
             </button>
@@ -609,7 +625,7 @@ export default function RecommendationForm() {
               type="button"
               disabled={isPending}
               onClick={() => handleSubmit()}
-              className="inline-flex items-center px-8 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-base transition shadow-xl shadow-orange-500/25 disabled:opacity-50"
+              className="inline-flex items-center px-8 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-base transition shadow-xl shadow-orange-500/25 disabled:opacity-50 active:scale-95"
             >
               {isPending ? (
                 <span>Generating Matches...</span>
