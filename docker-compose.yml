@@ -1,0 +1,87 @@
+services:
+  # ==============================================================
+  # 1. PostgreSQL 16 Relational Database
+  # ==============================================================
+  db:
+    image: postgres:16-alpine
+    container_name: bike4u_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bike4u_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bike4u_secure_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-bike4u_db}
+    ports:
+      # Mapped to host 5433 to avoid collision with standard 5432
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bike4u_user} -d ${POSTGRES_DB:-bike4u_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bike4u_net
+
+  # ==============================================================
+  # 2. Redis 7 In-Memory Cache & Queue
+  # ==============================================================
+  cache:
+    image: redis:7-alpine
+    container_name: bike4u_cache
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      # Mapped to host 6380 to avoid collision with standard 6379
+      - "${REDIS_PORT:-6380}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bike4u_net
+
+  # ==============================================================
+  # 3. Next.js Web App & Matching Engine & PDF Generator
+  # ==============================================================
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bike4u_web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-bike4u_user}:${POSTGRES_PASSWORD:-bike4u_secure_pass}@db:5432/${POSTGRES_DB:-bike4u_db}?schema=public"
+      REDIS_URL: "redis://cache:6379"
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+      PORT: 3000
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+    networks:
+      - bike4u_net
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  bike4u_net:
+    driver: bridge

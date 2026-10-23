@@ -1,0 +1,204 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum VehicleStatus {
+  active
+  discontinued
+  upcoming
+}
+
+enum VehicleSegment {
+  Commuter
+  Sports
+  Cruiser
+  Adventure
+  Scooter
+  Electric
+}
+
+enum BodyType {
+  motorcycle
+  scooter
+  electric
+}
+
+enum AbsType {
+  none
+  single
+  dual
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  logoUrl   String?
+  origin    String?  @default("India")
+  website   String?
+  models    Model[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Model {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  brandId     String
+  brand       Brand          @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  segment     VehicleSegment
+  bodyType    BodyType
+  description String?
+  variants    Variant[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([brandId])
+  @@index([segment])
+}
+
+model Variant {
+  id                 String        @id @default(cuid())
+  name               String
+  slug               String        @unique
+  modelId            String
+  model              Model         @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  modelYear          Int           @default(2024)
+  status             VehicleStatus @default(active)
+  launchDate         DateTime?
+
+  // Pricing
+  exShowroomPrice    Int           // In INR
+  referenceCity      String        @default("New Delhi")
+  priceEffectiveDate DateTime      @default(now())
+  onRoadEstimate     Int?
+
+  // Efficiency
+  araiMileage        Float?        // km/l for ICE
+  realWorldMileage   Float?
+  evRange            Float?        // km per full charge for EV
+  batteryCapacity    Float?        // kWh
+  chargingTime       Float?        // hours
+
+  // Engine & Performance
+  engineCc           Float?
+  maxPower           String?       // e.g. "14.5 PS @ 8500 rpm"
+  maxTorque          String?       // e.g. "12.8 Nm @ 6000 rpm"
+  gearbox            String?       // e.g. "5-Speed"
+  topSpeed           Int?          // km/h
+  motorPower         Float?        // kW for EV
+
+  // Classification & Style tags
+  primaryStyle       String        // Sporty, Classic, Cruiser, Rugged, Minimal
+  secondaryStyle     String?
+
+  // Features
+  abs                AbsType       @default(none)
+  discBrakes         Boolean       @default(false)
+  digitalConsole     Boolean       @default(false)
+  bluetooth          Boolean       @default(false)
+  usbCharging        Boolean       @default(false)
+  electricStart      Boolean       @default(true)
+  ledHeadlamp        Boolean       @default(false)
+  alloyWheels        Boolean       @default(false)
+  tubelessTyres      Boolean       @default(false)
+
+  // Dimensions
+  kerbWeight         Int?          // kg
+  seatHeight         Int?          // mm
+  groundClearance    Int?          // mm
+  fuelTankCapacity   Float?        // litres
+
+  // Media
+  heroImage          String?
+  gallery            String[]      @default([])
+  brochureUrl        String?
+  colors             String[]      @default([])
+
+  // Provenance & Versioning
+  sourceUrl          String?
+  sourceType         String?       @default("OEM")
+  verifiedBy         String?       @default("Bike4U Team")
+  lastVerifiedAt     DateTime      @default(now())
+  datasetVersion     String        @default("1.0.0")
+
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([modelId])
+  @@index([status])
+  @@index([exShowroomPrice])
+}
+
+model RecommendationSnapshot {
+  id                 String   @id @default(cuid())
+  datasetVersion     String   @default("1.0.0")
+  inputs             Json     // { segment, budgetMin, budgetMax, style, mileage, features }
+  results            Json     // Ranked top 5 bike results with sub-scores, whyMatched, tradeOffs
+  relaxed            Boolean  @default(false)
+  relaxationLevel    Int      @default(0)
+  relaxationMessage  String?
+  totalCandidates    Int      @default(0)
+  passedHardFilters  Int      @default(0)
+  createdAt          DateTime @default(now())
+
+  reports            Report[]
+  feedbacks          Feedback[]
+
+  @@index([createdAt])
+}
+
+model Report {
+  id            String                 @id @default(cuid())
+  reportNumber  String                 @unique
+  snapshotId    String
+  snapshot      RecommendationSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+  pdfPath       String?
+  status        String                 @default("completed") // pending, generating, completed, failed
+  error         String?
+  durationMs    Int?
+  sizeKb        Int?
+  expiresAt     DateTime
+  createdAt     DateTime               @default(now())
+
+  @@index([snapshotId])
+  @@index([reportNumber])
+}
+
+model Feedback {
+  id          String                 @id @default(cuid())
+  snapshotId  String
+  snapshot    RecommendationSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+  helpful     Boolean
+  reasonCode  String?
+  comments    String?
+  createdAt   DateTime               @default(now())
+
+  @@index([snapshotId])
+}
+
+model DatasetVersion {
+  id          String   @id @default(cuid())
+  version     String   @unique
+  notes       String?
+  recordCount Int      @default(0)
+  isActive    Boolean  @default(false)
+  publishedBy String   @default("Admin")
+  publishedAt DateTime @default(now())
+  snapshotJson Json?   // Backup of active dataset for rollback
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String   // Hashed password
+  role      String   @default("Editor") // Admin, Publisher, Editor, Viewer
+  createdAt DateTime @default(now())
+}
