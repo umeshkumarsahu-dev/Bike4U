@@ -1,0 +1,32 @@
+services:
+  # ==========================================================
+  # Next.js Web Service + Puppeteer Headless Chromium
+  # ==========================================================
+  - type: web
+    name: bike4u-app
+    runtime: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bike4u-db
+          property: connectionString
+      - key: DISABLE_REDIS
+        value: "true" # Uses built-in in-memory cache on free tier, or replace with Upstash Redis URL
+      - key: PUPPETEER_EXECUTABLE_PATH
+        value: /usr/bin/chromium
+
+# ==========================================================
+# Managed PostgreSQL 16 Database
+# ==========================================================
+databases:
+  - name: bike4u-db
+    databaseName: bike4u_db
+    user: bike4u_user
+    plan: free
+    region: oregon
