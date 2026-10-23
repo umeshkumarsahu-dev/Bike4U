@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+  <!-- Electric Scooter (EV): Modern minimal sharp lines, battery floorboard, lightning bolt -->
+  <circle cx="45" cy="85" r="20" stroke="#10b981" stroke-width="6"/>
+  <circle cx="45" cy="85" r="8" fill="#a7f3d0"/>
+  <circle cx="155" cy="85" r="20" stroke="#10b981" stroke-width="6"/>
+  <circle cx="155" cy="85" r="8" fill="#a7f3d0"/>
+  <!-- Sleek apron & chassis -->
+  <path d="M136 42 L150 78" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+  <!-- Floorboard battery pack -->
+  <rect x="85" y="80" width="45" height="10" rx="3" fill="#059669"/>
+  <!-- Minimal geometric rear -->
+  <path d="M52 76 L85 64 L102 64 L90 82 Z" fill="#0B1F3A"/>
+  <!-- Sleek seat -->
+  <path d="M62 60 L102 60 L100 64 L62 64 Z" fill="#1e293b"/>
+  <!-- Lightning Bolt Badge -->
+  <path d="M102 70 L97 78 L101 78 L98 86 L106 76 L102 76 Z" fill="#facc15"/>
+</svg>

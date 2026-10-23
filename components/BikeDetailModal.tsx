@@ -2,6 +2,7 @@
 
 import { ScoredBikeResult } from '@/lib/matching-engine/types';
 import { X, ExternalLink, Check, AlertCircle, Shield, Gauge, Fuel, Info } from 'lucide-react';
+import BikeImage from './BikeImage';
 
 interface BikeDetailModalProps {
   result: ScoredBikeResult | null;
@@ -50,13 +51,15 @@ export default function BikeDetailModal({ result, onClose }: BikeDetailModalProp
         <div className="p-6 sm:p-8 overflow-y-auto space-y-8 flex-1">
           {/* Hero Image & Price Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-            <div className="bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 h-56 flex items-center justify-center p-4">
-              <img
-                src={bike.heroImage || 'https://via.placeholder.com/400x300'}
-                alt={bike.modelName}
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
+            <BikeImage
+              src={bike.heroImage}
+              alt={bike.modelName}
+              brandName={bike.brandName}
+              modelName={bike.modelName}
+              segment={bike.segment}
+              className="h-56 w-full shadow-sm"
+              showVerifiedBadge={true}
+            />
 
             <div className="space-y-4">
               <div className="bg-brand-light p-4 rounded-2xl border border-slate-200">

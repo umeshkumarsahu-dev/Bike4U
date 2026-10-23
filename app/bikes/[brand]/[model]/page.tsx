@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Check, Sparkles, Shield, Fuel } from 'lucide-react';
+import BikeImage from '@/components/BikeImage';
 import type { Metadata } from 'next';
 
 interface PageProps {
@@ -144,10 +145,14 @@ export default async function BikeModelPage({ params }: PageProps) {
             </div>
 
             <div className="bg-slate-100 flex items-center justify-center p-6 border-t md:border-t-0 md:border-l border-slate-200">
-              <img
-                src={primaryVariant.heroImage || 'https://via.placeholder.com/600x400'}
+              <BikeImage
+                src={primaryVariant.heroImage}
                 alt={`${model.brand.name} ${model.name}`}
-                className="max-h-72 w-full object-contain rounded-lg shadow-sm"
+                brandName={model.brand.name}
+                modelName={model.name}
+                segment={model.segment}
+                className="max-h-72 w-full h-64"
+                showVerifiedBadge={true}
               />
             </div>
           </div>

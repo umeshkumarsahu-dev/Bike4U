@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+  <!-- Adventure / ADV Motorcycle: Tall stance, windscreen, beak -->
+  <circle cx="45" cy="85" r="23" stroke="#94a3b8" stroke-width="6"/>
+  <circle cx="45" cy="85" r="9" fill="#cbd5e1"/>
+  <circle cx="155" cy="82" r="26" stroke="#94a3b8" stroke-width="6"/>
+  <circle cx="155" cy="82" r="9" fill="#cbd5e1"/>
+  <!-- Tall frame & high clearance -->
+  <path d="M45 85 L75 52 L115 50 L155 82" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+  <!-- Tall tank & beak -->
+  <path d="M100 45 L135 45 L152 56 L115 60 Z" fill="#F26B1D"/>
+  <!-- Windscreen -->
+  <path d="M135 44 L142 28" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round"/>
+  <!-- Flat ADV seat -->
+  <path d="M65 52 L100 52 L100 58 L65 58 Z" fill="#334155"/>
+  <path d="M90 85 L145 68" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+</svg>

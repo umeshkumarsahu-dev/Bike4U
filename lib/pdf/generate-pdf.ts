@@ -3,6 +3,122 @@ import { ScoredBikeResult, UserPreferences } from '../matching-engine/types';
 import fs from 'fs';
 import path from 'path';
 
+const SEGMENT_SVGS: Record<string, string> = {
+  Commuter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+    <circle cx="45" cy="80" r="25" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="45" cy="80" r="10" fill="#cbd5e1"/>
+    <circle cx="155" cy="80" r="25" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="155" cy="80" r="10" fill="#cbd5e1"/>
+    <path d="M45 80 L75 55 L115 55 L155 80" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M75 55 L85 80 L125 80 L115 55" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M100 48 C115 48 135 50 140 60 C135 65 115 62 100 62 Z" fill="#F26B1D"/>
+    <path d="M70 52 C85 52 105 52 110 55 C100 58 85 58 70 56 Z" fill="#334155"/>
+    <path d="M135 40 L140 60" stroke="#0B1F3A" stroke-width="4" stroke-linecap="round"/>
+    <path d="M130 38 L142 42" stroke="#0B1F3A" stroke-width="4" stroke-linecap="round"/>
+    <path d="M95 82 L160 82" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+  </svg>`,
+  Sports: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+    <circle cx="45" cy="80" r="25" stroke="#94a3b8" stroke-width="7"/>
+    <circle cx="45" cy="80" r="10" fill="#cbd5e1"/>
+    <circle cx="155" cy="80" r="25" stroke="#94a3b8" stroke-width="7"/>
+    <circle cx="155" cy="80" r="10" fill="#cbd5e1"/>
+    <path d="M45 80 L80 60 L125 50 L155 80" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M110 40 Q135 38 150 55 L125 75 Z" fill="#F26B1D"/>
+    <path d="M135 48 L145 52" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M70 48 L95 56 L70 60 Z" fill="#334155"/>
+    <path d="M90 82 L135 70" stroke="#64748b" stroke-width="5" stroke-linecap="round"/>
+  </svg>`,
+  Cruiser: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+    <circle cx="35" cy="80" r="24" stroke="#94a3b8" stroke-width="7"/>
+    <circle cx="35" cy="80" r="9" fill="#cbd5e1"/>
+    <circle cx="165" cy="80" r="26" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="165" cy="80" r="9" fill="#cbd5e1"/>
+    <path d="M35 80 L75 68 L115 54 L165 80" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M90 50 Q115 48 128 62 L95 64 Z" fill="#F26B1D"/>
+    <path d="M60 62 Q75 62 88 64 L75 70 Z" fill="#334155"/>
+    <path d="M125 45 L135 34" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M80 84 L160 84" stroke="#64748b" stroke-width="5" stroke-linecap="round"/>
+  </svg>`,
+  Scooter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+    <circle cx="45" cy="85" r="20" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="45" cy="85" r="8" fill="#cbd5e1"/>
+    <circle cx="155" cy="85" r="20" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="155" cy="85" r="8" fill="#cbd5e1"/>
+    <path d="M135 45 Q155 58 150 82" stroke="#0B1F3A" stroke-width="6" stroke-linecap="round"/>
+    <path d="M90 85 L135 85" stroke="#0B1F3A" stroke-width="6" stroke-linecap="round"/>
+    <path d="M50 78 Q75 62 100 62 L95 85 L50 85 Z" fill="#F26B1D"/>
+    <path d="M60 58 Q85 58 105 60 L100 64 L60 62 Z" fill="#334155"/>
+    <path d="M132 40 L140 46" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="140" cy="44" r="4" fill="#facc15"/>
+  </svg>`,
+  Electric: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+    <circle cx="45" cy="85" r="20" stroke="#10b981" stroke-width="6"/>
+    <circle cx="45" cy="85" r="8" fill="#a7f3d0"/>
+    <circle cx="155" cy="85" r="20" stroke="#10b981" stroke-width="6"/>
+    <circle cx="155" cy="85" r="8" fill="#a7f3d0"/>
+    <path d="M136 42 L150 78" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <rect x="85" y="80" width="45" height="10" rx="3" fill="#059669"/>
+    <path d="M52 76 L85 64 L102 64 L90 82 Z" fill="#0B1F3A"/>
+    <path d="M62 60 L102 60 L100 64 L62 64 Z" fill="#1e293b"/>
+    <path d="M102 70 L97 78 L101 78 L98 86 L106 76 L102 76 Z" fill="#facc15"/>
+  </svg>`,
+  Adventure: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+    <circle cx="45" cy="85" r="23" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="45" cy="85" r="9" fill="#cbd5e1"/>
+    <circle cx="155" cy="82" r="26" stroke="#94a3b8" stroke-width="6"/>
+    <circle cx="155" cy="82" r="9" fill="#cbd5e1"/>
+    <path d="M45 85 L75 52 L115 50 L155 82" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M100 45 L135 45 L152 56 L115 60 Z" fill="#F26B1D"/>
+    <path d="M135 44 L142 28" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round"/>
+    <path d="M65 52 L100 52 L100 58 L65 58 Z" fill="#334155"/>
+    <path d="M90 85 L145 68" stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+  </svg>`,
+};
+
+function getSegmentSvg(segment: string): string {
+  return SEGMENT_SVGS[segment] || SEGMENT_SVGS['Commuter'];
+}
+
+function renderPdfBikeImage(
+  bike: { heroImage?: string | null; brandName: string; modelName: string; segment: string },
+  mode: 'thumb' | 'large'
+): string {
+  if (bike.heroImage) {
+    if (mode === 'thumb') {
+      return `<img class="rank-image" src="${bike.heroImage}" alt="${bike.modelName}">`;
+    }
+    return `<img src="${bike.heroImage}" alt="${bike.modelName}" style="width: 48%; height: 180px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc;">`;
+  }
+
+  const svg = getSegmentSvg(bike.segment);
+  if (mode === 'thumb') {
+    return `
+      <div class="rank-image" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px; box-sizing: border-box; text-align: center;">
+        <div style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: center;">
+          ${svg}
+        </div>
+        <div style="font-size: 5.5pt; color: #b45309; font-weight: 700; text-transform: uppercase;">Photo Pending</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div style="width: 48%; height: 180px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 12px; box-sizing: border-box;">
+      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 7.5pt; font-weight: 700; color: #64748b; text-transform: uppercase;">
+        <span>${bike.segment} Segment</span>
+        <span style="background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 4px; border: 1px solid #fde68a; font-size: 7pt;">Photo Pending Verification</span>
+      </div>
+      <div style="width: 100%; height: 95px; display: flex; align-items: center; justify-content: center;">
+        ${svg}
+      </div>
+      <div style="width: 100%; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 4px;">
+        <div style="font-size: 8.5pt; font-weight: 700; color: #0B1F3A;">${bike.brandName} ${bike.modelName}</div>
+        <div style="font-size: 7pt; color: #94a3b8;">Specifications Verified by Bike4U</div>
+      </div>
+    </div>
+  `;
+}
+
 export interface ReportData {
   reportId: string;
   reportDate: string;
@@ -408,7 +524,7 @@ export async function generateReportHtml(data: ReportData): Promise<string> {
           (item, idx) => `
         <div class="rank-card">
           <div class="rank-number">#${idx + 1}</div>
-          <img class="rank-image" src="${item.bike.heroImage || 'https://via.placeholder.com/150'}" alt="${item.bike.modelName}">
+          ${renderPdfBikeImage(item.bike, 'thumb')}
           <div class="rank-info">
             <div style="font-size: 12pt; font-weight: 700; color: #0B1F3A;">
               ${item.bike.brandName} ${item.bike.modelName}
@@ -544,7 +660,7 @@ export async function generateReportHtml(data: ReportData): Promise<string> {
         </div>
 
         <div style="display: flex; gap: 20px; margin-bottom: 16px;">
-          <img src="${item.bike.heroImage || 'https://via.placeholder.com/350'}" alt="${item.bike.modelName}" style="width: 48%; height: 180px; object-fit: cover; border-radius: 8px; border: 1px solid #cbd5e1;">
+          ${renderPdfBikeImage(item.bike, 'large')}
 
           <div style="width: 50%;">
             <h3 style="font-size: 11pt;">Score Breakdown</h3>

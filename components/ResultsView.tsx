@@ -21,6 +21,7 @@ import {
 import { ScoredBikeResult, UserPreferences } from '@/lib/matching-engine/types';
 import BikeDetailModal from './BikeDetailModal';
 import ComparisonTable from './ComparisonTable';
+import BikeImage from './BikeImage';
 
 interface ResultsViewProps {
   snapshotId: string;
@@ -266,13 +267,15 @@ export default function ResultsView({
                         <span className="text-[9px] font-bold uppercase text-slate-400">Rank</span>
                       </div>
 
-                      <div className="w-36 h-28 bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 flex items-center justify-center p-2 flex-shrink-0">
-                        <img
-                          src={item.bike.heroImage || 'https://via.placeholder.com/300x200'}
-                          alt={item.bike.modelName}
-                          className="max-h-full max-w-full object-contain"
-                        />
-                      </div>
+                      <BikeImage
+                        src={item.bike.heroImage}
+                        alt={item.bike.modelName}
+                        brandName={item.bike.brandName}
+                        modelName={item.bike.modelName}
+                        segment={item.bike.segment}
+                        className="w-36 h-28 flex-shrink-0 shadow-sm"
+                        showVerifiedBadge={true}
+                      />
 
                       <div>
                         <div className="text-xs uppercase font-bold text-slate-400 tracking-wider">

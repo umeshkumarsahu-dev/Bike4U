@@ -40,7 +40,7 @@ interface SeedVariant {
   seatHeight?: number;
   groundClearance?: number;
   fuelTankCapacity?: number;
-  heroImage?: string;
+  heroImage?: string | null;
   sourceUrl?: string;
 }
 
@@ -79,7 +79,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 785,
     groundClearance: 165,
     fuelTankCapacity: 9.8,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.heromotocorp.com',
   },
   {
@@ -115,7 +115,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 786,
     groundClearance: 168,
     fuelTankCapacity: 9.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.honda2wheelersindia.com',
   },
   {
@@ -151,7 +151,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 790,
     groundClearance: 160,
     fuelTankCapacity: 11.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.honda2wheelersindia.com',
   },
   {
@@ -187,7 +187,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 780,
     groundClearance: 180,
     fuelTankCapacity: 10.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.tvsmotor.com',
   },
   {
@@ -223,7 +223,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 790,
     groundClearance: 165,
     fuelTankCapacity: 11.5,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.bajajauto.com',
   },
 
@@ -261,7 +261,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 805,
     groundClearance: 168,
     fuelTankCapacity: 12.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.bajajauto.com',
   },
   {
@@ -297,7 +297,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 810,
     groundClearance: 170,
     fuelTankCapacity: 10.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.yamaha-motor-india.com',
   },
   {
@@ -333,7 +333,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 815,
     groundClearance: 170,
     fuelTankCapacity: 11.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.yamaha-motor-india.com',
   },
   {
@@ -369,7 +369,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 822,
     groundClearance: 155,
     fuelTankCapacity: 13.4,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.ktm.com/en-in.html',
   },
   {
@@ -405,7 +405,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 800,
     groundClearance: 180,
     fuelTankCapacity: 12.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.tvsmotor.com',
   },
 
@@ -443,7 +443,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 805,
     groundClearance: 170,
     fuelTankCapacity: 13.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.royalenfield.com',
   },
   {
@@ -479,7 +479,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 790,
     groundClearance: 150,
     fuelTankCapacity: 13.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.royalenfield.com',
   },
   {
@@ -515,7 +515,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 737,
     groundClearance: 169,
     fuelTankCapacity: 13.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.bajajauto.com',
   },
   {
@@ -551,7 +551,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 795,
     groundClearance: 181,
     fuelTankCapacity: 14.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.tvsmotor.com',
   },
 
@@ -589,7 +589,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 825,
     groundClearance: 230,
     fuelTankCapacity: 17.0,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.royalenfield.com',
   },
   {
@@ -625,7 +625,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 891,
     groundClearance: 270,
     fuelTankCapacity: 13.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.heromotocorp.com',
   },
   {
@@ -661,7 +661,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 855,
     groundClearance: 200,
     fuelTankCapacity: 14.5,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.ktm.com',
   },
 
@@ -699,7 +699,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 692,
     groundClearance: 162,
     fuelTankCapacity: 5.3,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.honda2wheelersindia.com',
   },
   {
@@ -735,7 +735,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 773,
     groundClearance: 160,
     fuelTankCapacity: 5.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.suzukimotorcycle.co.in',
   },
   {
@@ -771,7 +771,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 770,
     groundClearance: 155,
     fuelTankCapacity: 5.8,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.tvsmotor.com',
   },
   {
@@ -807,7 +807,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 778,
     groundClearance: 155,
     fuelTankCapacity: 5.0,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.heromotocorp.com',
   },
 
@@ -843,7 +843,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 111,
     seatHeight: 780,
     groundClearance: 170,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.atherenergy.com',
   },
   {
@@ -877,7 +877,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 119,
     seatHeight: 780,
     groundClearance: 165,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.atherenergy.com',
   },
   {
@@ -911,7 +911,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 116,
     seatHeight: 805,
     groundClearance: 160,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.olaelectric.com',
   },
   {
@@ -945,7 +945,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 118,
     seatHeight: 770,
     groundClearance: 157,
-    heroImage: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.tvsmotor.com/iqube',
   },
   {
@@ -979,7 +979,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 134,
     seatHeight: 760,
     groundClearance: 160,
-    heroImage: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&auto=format&fit=crop&q=60',
+    heroImage: null,
     sourceUrl: 'https://www.chetak.com',
   },
 ];

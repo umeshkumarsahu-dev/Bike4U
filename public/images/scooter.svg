@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="100%" height="100%" fill="none">
+  <!-- Scooter: Step-through floorboard, rear engine casing, front apron -->
+  <circle cx="45" cy="85" r="20" stroke="#94a3b8" stroke-width="6"/>
+  <circle cx="45" cy="85" r="8" fill="#cbd5e1"/>
+  <circle cx="155" cy="85" r="20" stroke="#94a3b8" stroke-width="6"/>
+  <circle cx="155" cy="85" r="8" fill="#cbd5e1"/>
+  <!-- Front Apron -->
+  <path d="M135 45 Q155 58 150 82" stroke="#0B1F3A" stroke-width="6" stroke-linecap="round"/>
+  <!-- Floorboard step-through -->
+  <path d="M90 85 L135 85" stroke="#0B1F3A" stroke-width="6" stroke-linecap="round"/>
+  <!-- Rear Bodywork & Under-seat -->
+  <path d="M50 78 Q75 62 100 62 L95 85 L50 85 Z" fill="#F26B1D"/>
+  <!-- Wide plush seat -->
+  <path d="M60 58 Q85 58 105 60 L100 64 L60 62 Z" fill="#334155"/>
+  <!-- Handlebars with headlamp -->
+  <path d="M132 40 L140 46" stroke="#0B1F3A" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="140" cy="44" r="4" fill="#facc15"/>
+</svg>
