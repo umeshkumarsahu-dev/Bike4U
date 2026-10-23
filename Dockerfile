@@ -62,7 +62,8 @@ ENV HOSTNAME="0.0.0.0"
 
 # Non-root user setup
 RUN groupadd --system --gid 1001 nodejs && \
-    useradd --system --uid 1001 nextjs
+    useradd --system --uid 1001 nextjs && \
+    mkdir -p public .next/static
 
 # Copy build artifacts
 COPY --from=builder /app/public ./public
@@ -83,5 +84,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:3000/api/health || exit 1
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
 CMD ["node", "server.js"]
