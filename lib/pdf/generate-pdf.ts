@@ -84,10 +84,25 @@ function renderPdfBikeImage(
   mode: 'thumb' | 'large'
 ): string {
   if (bike.heroImage) {
-    if (mode === 'thumb') {
-      return `<img class="rank-image" src="${bike.heroImage}" alt="${bike.modelName}">`;
+    let src = bike.heroImage;
+    if (src.startsWith('/')) {
+      try {
+        const localPath = path.join(process.cwd(), 'public', src);
+        if (fs.existsSync(localPath)) {
+          const ext = path.extname(localPath).toLowerCase().replace('.', '') || 'jpeg';
+          const mime = ext === 'png' ? 'image/png' : ext === 'svg' ? 'image/svg+xml' : 'image/jpeg';
+          const b64 = fs.readFileSync(localPath).toString('base64');
+          src = `data:${mime};base64,${b64}`;
+        }
+      } catch (e) {
+        // fallback to original src
+      }
     }
-    return `<img src="${bike.heroImage}" alt="${bike.modelName}" style="width: 48%; height: 180px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc;">`;
+
+    if (mode === 'thumb') {
+      return `<img class="rank-image" src="${src}" alt="${bike.modelName}">`;
+    }
+    return `<img src="${src}" alt="${bike.modelName}" style="width: 48%; height: 180px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc;">`;
   }
 
   const svg = getSegmentSvg(bike.segment);

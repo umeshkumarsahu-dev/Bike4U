@@ -79,7 +79,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 785,
     groundClearance: 165,
     fuelTankCapacity: 9.8,
-    heroImage: null,
+    heroImage: '/bikes/hero-splendor-plus-xtec.png',
     sourceUrl: 'https://www.heromotocorp.com',
   },
   {
@@ -115,7 +115,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 786,
     groundClearance: 168,
     fuelTankCapacity: 9.0,
-    heroImage: null,
+    heroImage: '/bikes/honda-shine-100-std.jpg',
     sourceUrl: 'https://www.honda2wheelersindia.com',
   },
   {
@@ -187,7 +187,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 780,
     groundClearance: 180,
     fuelTankCapacity: 10.0,
-    heroImage: null,
+    heroImage: '/bikes/tvs-raider-125-sx.jpg',
     sourceUrl: 'https://www.tvsmotor.com',
   },
   {
@@ -223,7 +223,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 790,
     groundClearance: 165,
     fuelTankCapacity: 11.5,
-    heroImage: null,
+    heroImage: '/bikes/bajaj-pulsar-125-split.jpg',
     sourceUrl: 'https://www.bajajauto.com',
   },
 
@@ -261,7 +261,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 805,
     groundClearance: 168,
     fuelTankCapacity: 12.0,
-    heroImage: null,
+    heroImage: '/bikes/bajaj-pulsar-ns200-abs.jpg',
     sourceUrl: 'https://www.bajajauto.com',
   },
   {
@@ -297,7 +297,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 810,
     groundClearance: 170,
     fuelTankCapacity: 10.0,
-    heroImage: null,
+    heroImage: '/bikes/yamaha-mt-15-deluxe.jpg',
     sourceUrl: 'https://www.yamaha-motor-india.com',
   },
   {
@@ -333,7 +333,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 815,
     groundClearance: 170,
     fuelTankCapacity: 11.0,
-    heroImage: null,
+    heroImage: '/bikes/yamaha-r15-v4-blue.jpg',
     sourceUrl: 'https://www.yamaha-motor-india.com',
   },
   {
@@ -369,7 +369,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 822,
     groundClearance: 155,
     fuelTankCapacity: 13.4,
-    heroImage: null,
+    heroImage: '/bikes/ktm-duke-200-gen3.jpg',
     sourceUrl: 'https://www.ktm.com/en-in.html',
   },
   {
@@ -405,7 +405,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 800,
     groundClearance: 180,
     fuelTankCapacity: 12.0,
-    heroImage: null,
+    heroImage: '/bikes/tvs-apache-rtr-160-4v-se.jpg',
     sourceUrl: 'https://www.tvsmotor.com',
   },
 
@@ -443,7 +443,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 805,
     groundClearance: 170,
     fuelTankCapacity: 13.0,
-    heroImage: null,
+    heroImage: '/bikes/re-classic-350-dark.jpg',
     sourceUrl: 'https://www.royalenfield.com',
   },
   {
@@ -515,7 +515,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 737,
     groundClearance: 169,
     fuelTankCapacity: 13.0,
-    heroImage: null,
+    heroImage: '/bikes/bajaj-avenger-220-cruise.jpg',
     sourceUrl: 'https://www.bajajauto.com',
   },
   {
@@ -589,7 +589,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 825,
     groundClearance: 230,
     fuelTankCapacity: 17.0,
-    heroImage: null,
+    heroImage: '/bikes/re-himalayan-450-pass.jpg',
     sourceUrl: 'https://www.royalenfield.com',
   },
   {
@@ -625,7 +625,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 891,
     groundClearance: 270,
     fuelTankCapacity: 13.0,
-    heroImage: null,
+    heroImage: '/bikes/hero-xpulse-200-4v-pro.png',
     sourceUrl: 'https://www.heromotocorp.com',
   },
   {
@@ -661,7 +661,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 855,
     groundClearance: 200,
     fuelTankCapacity: 14.5,
-    heroImage: null,
+    heroImage: '/bikes/ktm-250-adventure-std.png',
     sourceUrl: 'https://www.ktm.com',
   },
 
@@ -699,7 +699,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 692,
     groundClearance: 162,
     fuelTankCapacity: 5.3,
-    heroImage: null,
+    heroImage: '/bikes/honda-activa-6g-hsmart.jpg',
     sourceUrl: 'https://www.honda2wheelersindia.com',
   },
   {
@@ -735,7 +735,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 773,
     groundClearance: 160,
     fuelTankCapacity: 5.0,
-    heroImage: null,
+    heroImage: '/bikes/suzuki-access-125-connect.jpg',
     sourceUrl: 'https://www.suzukimotorcycle.co.in',
   },
   {
@@ -771,7 +771,7 @@ const SEED_DATA: SeedVariant[] = [
     seatHeight: 770,
     groundClearance: 155,
     fuelTankCapacity: 5.8,
-    heroImage: null,
+    heroImage: '/bikes/tvs-ntorq-125-race-xp.jpg',
     sourceUrl: 'https://www.tvsmotor.com',
   },
   {
@@ -911,7 +911,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 116,
     seatHeight: 805,
     groundClearance: 160,
-    heroImage: null,
+    heroImage: '/bikes/ola-s1-pro-gen2.jpg',
     sourceUrl: 'https://www.olaelectric.com',
   },
   {
@@ -945,7 +945,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 118,
     seatHeight: 770,
     groundClearance: 157,
-    heroImage: null,
+    heroImage: '/bikes/tvs-iqube-st-34.jpg',
     sourceUrl: 'https://www.tvsmotor.com/iqube',
   },
   {
@@ -979,7 +979,7 @@ const SEED_DATA: SeedVariant[] = [
     kerbWeight: 134,
     seatHeight: 760,
     groundClearance: 160,
-    heroImage: null,
+    heroImage: '/bikes/bajaj-chetak-premium-32.jpg',
     sourceUrl: 'https://www.chetak.com',
   },
 ];

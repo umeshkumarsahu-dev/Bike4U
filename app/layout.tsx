@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: 'Bike for U - Find Your Right Motorcycle or Scooter in Under 2 Minutes',
   description:
     'Five preferences in. Ranked matches and a downloadable verified PDF report out. Free Indian two-wheeler recommendations.',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
